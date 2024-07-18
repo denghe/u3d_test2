@@ -48,11 +48,11 @@ public class Monster : SpaceItem {
         indexOfContainer = monsters.Count;
         monsters.Add(this);
 
-        GO.Pop(ref go);
+        GO.Pop(ref go, true, 0);
 
-        GO.Pop(ref mgo, 3);
+        GO.Pop(ref mgo, false, 3);
         mgo.r.material = scene.minimap_material;
-        mgo.t.localScale = new Vector3(4, 4, 4);
+        mgo.t.localScale = new Vector3(3, 3, 3);
         //mgo.r.color = Color.red;
     }
 
@@ -125,8 +125,8 @@ public class Monster : SpaceItem {
     public virtual void Draw(float cx, float cy) {
         if (x < cx - Scene.designWidth_2
             || x > cx + Scene.designWidth_2
-            || y < cy - Scene.designHeight_2
-            || y > cy + Scene.designHeight_2) {
+            || y < cy - Scene.designHeight
+            || y > cy + Scene.designHeight) {
             go.Disable();
         } else {
             go.Enable();
@@ -135,7 +135,7 @@ public class Monster : SpaceItem {
             go.r.sprite = sprites[(int)frameIndex];
 
             // 同步 & 坐标系转换( y 坐标需要反转 )
-            go.t.position = new Vector3(x * Scene.designWidthToCameraRatio, -y * Scene.designWidthToCameraRatio, 0);
+            go.t.position = new Vector3(x * Scene.designWidthToCameraRatio, 0, -y * Scene.designWidthToCameraRatio);
 
             // 同步尺寸缩放( 根据半径推送算 )
             var s = displayBaseScale * radius * _1_defaultRadius;
@@ -151,17 +151,17 @@ public class Monster : SpaceItem {
 
         if (x < cx - Scene.designWidth * 2
             || x > cx + Scene.designWidth * 2
-            || y < cy - Scene.designHeight * 2
-            || y > cy + Scene.designHeight * 2) {
+            || y < cy - Scene.designHeight * 4
+            || y > cy + Scene.designHeight * 4) {
             mgo.Disable();
         } else {
             mgo.Enable();
-            mgo.t.position = new Vector3(x * Scene.designWidthToCameraRatio, -y * Scene.designWidthToCameraRatio, 0);
+            mgo.t.position = new Vector3(x * Scene.designWidthToCameraRatio, 0, -y * Scene.designWidthToCameraRatio);
         }
     }
 
     public virtual void DrawGizmos() {
-        Gizmos.DrawWireSphere(new Vector3(x * Scene.designWidthToCameraRatio, -y * Scene.designWidthToCameraRatio, 0), radius * Scene.designWidthToCameraRatio);
+        Gizmos.DrawWireSphere(new Vector3(x * Scene.designWidthToCameraRatio, 0, -y * Scene.designWidthToCameraRatio), radius * Scene.designWidthToCameraRatio);
     }
 
     public virtual void Destroy(bool needRemoveFromContainer = true) {
@@ -194,7 +194,7 @@ public class Monster : SpaceItem {
 
     // 重置偏移
     void ResetTargetOffsetXY() {
-        var p = stage.GetRndPosDoughnut(player.radius * 10 * 3, 0.1f);
+        var p = stage.GetRndPosDoughnut(player.radius * 10, 0.1f);
         tarOffsetX = p.x;
         tarOffsetY = p.y;
     }

@@ -49,9 +49,9 @@ public class PlayerBullet {
 
     public PlayerBullet Init(float x_, float y_, float radians_, float cos_, float sin_) {
         // 从对象池分配 u3d 底层对象
-        GO.Pop(ref go);
+        GO.Pop(ref go, true, 0);
         go.r.sprite = scene.sprites_bullets[1];
-        go.t.rotation = Quaternion.Euler(0, 0, -radians_ * (180f / Mathf.PI));
+        go.t.eulerAngles = new Vector3(90, 0, -radians_ * (180f / Mathf.PI));
 
         lifeEndTime = life + scene.time;
         radians = radians_;
@@ -138,7 +138,7 @@ public class PlayerBullet {
             go.Enable();
 
             // 同步 & 坐标系转换( y 坐标需要反转 )
-            go.t.position = new Vector3(x * Scene.designWidthToCameraRatio, -y * Scene.designWidthToCameraRatio, 0);
+            go.t.position = new Vector3(x * Scene.designWidthToCameraRatio, 0.08f, -y * Scene.designWidthToCameraRatio);
 
             // 根据半径同步缩放
             var s = displayBaseScale * radius * _1_defaultRadius;
@@ -147,7 +147,7 @@ public class PlayerBullet {
     }
 
     public virtual void DrawGizmos() {
-        Gizmos.DrawWireSphere(new Vector3(x * Scene.designWidthToCameraRatio, -y * Scene.designWidthToCameraRatio, 0), radius * Scene.designWidthToCameraRatio);
+        Gizmos.DrawWireSphere(new Vector3(x * Scene.designWidthToCameraRatio, 0.08f, -y * Scene.designWidthToCameraRatio), radius * Scene.designWidthToCameraRatio);
     }
 
     public void Destroy() {

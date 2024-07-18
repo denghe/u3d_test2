@@ -6,9 +6,6 @@ public partial class Scene : MonoBehaviour {
 
     // 拖拽时先点击 锁 图标锁定
 
-    // 指向坐标在 0,0,0 的平台( camera light 啥的都绑在上面 )
-    public GameObject cams;
-
     // 编辑器中拖拽 带法线的材质球到此 ( texture packer 插件 生成的那个, 需要核查法线贴图是否正确 )
     public Material material;
 
@@ -113,7 +110,7 @@ public partial class Scene : MonoBehaviour {
         player = new Player(this);
 
         // 初始化起始关卡
-        stage = new Stage1(this);
+        stage = new Stage2(this);
     }
 
     void Update() {

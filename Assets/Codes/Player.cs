@@ -40,12 +40,10 @@ public class Player {
     public Player(Scene scene_) {
         scene = scene_;
 
-        GO.Pop(ref go);
-        go.r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-        go.r.receiveShadows = true;
+        GO.Pop(ref go, true, 0);
         go.Enable();
 
-        GO.Pop(ref mgo, 3);
+        GO.Pop(ref mgo, false, 3);
         mgo.Enable();
         mgo.r.sprite = scene.sprites_player[0];
         mgo.r.material = scene.minimap_material;

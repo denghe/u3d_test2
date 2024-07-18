@@ -56,12 +56,16 @@ public struct GO {
 
 
     // 从对象池拿 GO 并返回. 没有就新建
-    public static void Pop(ref GO o, int layer = 0) {
+    public static void Pop(ref GO o, bool enableShader, int layer) {
 #if UNITY_EDITOR
         Debug.Assert(o.g == null);
 #endif
         if (!pool.TryPop(out o)) {
             o = New();
+        }
+        if (enableShader) {
+            o.r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            o.r.receiveShadows = true;
         }
         o.g.layer = layer;
     }

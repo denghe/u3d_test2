@@ -25,7 +25,7 @@ public class Stage {
         scene = scene_;
         player = scene_.player;
         monstersSpaceContainer = new(Scene.numRows, Scene.numCols, Scene.cellSize);
-        camTrans = scene_.cams.transform;
+        camTrans = scene_.gameObject.transform;
     }
 
 
@@ -196,13 +196,13 @@ public class Stage {
         var e = Random.Range(0, 4);
         switch (e) {
             case 0:
-                return new Vector2(player.x + Random.Range(-Scene.designWidth_2, Scene.designWidth_2), player.y - Scene.designHeight_2);
+                return new Vector2(player.x + Random.Range(-Scene.designWidth_2, Scene.designWidth_2), player.y - Scene.designHeight);
             case 1:
-                return new Vector2(player.x + Random.Range(-Scene.designWidth_2, Scene.designWidth_2), player.y + Scene.designHeight_2);
+                return new Vector2(player.x + Random.Range(-Scene.designWidth_2, Scene.designWidth_2), player.y + Scene.designHeight);
             case 2:
-                return new Vector2(player.x - Scene.designWidth_2, player.y + Random.Range(-Scene.designWidth_2, Scene.designWidth_2));
+                return new Vector2(player.x - Scene.designWidth_2, player.y + Random.Range(-Scene.designHeight_2, Scene.designHeight));
             case 3:
-                return new Vector2(player.x + Scene.designWidth_2, player.y + Random.Range(-Scene.designWidth_2, Scene.designWidth_2));
+                return new Vector2(player.x + Scene.designWidth_2, player.y + Random.Range(-Scene.designHeight_2, Scene.designHeight));
         }
         return Vector2.zero;
     }

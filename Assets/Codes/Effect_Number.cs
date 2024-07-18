@@ -8,7 +8,7 @@ public class Effect_Number {
     public GO[] gos = new GO[12];
     public int size;
 
-    public const float incY = 1f / 60 * Scene.fps;
+    public const float incZ = 1f / 60 * Scene.fps;
     public const int life = (int)(Scene.fps * 0.5);
     public float x, y, z, scale;
     public int endLifeTime;
@@ -18,8 +18,8 @@ public class Effect_Number {
         stage = stage_;
         scene = stage_.scene;
         x = x_;
-        y = 5;
-        z = y_;
+        y = y_;
+        z = 5;
         scale = scale_;
         endLifeTime = scene.time + life;
         stage.effectNumbers.Add(this);
@@ -35,35 +35,35 @@ public class Effect_Number {
 
     public void GOInit(int idx, int b) {
         var o = new GO();
-        GO.Pop(ref o);
+        GO.Pop(ref o, false, 0);
         o.r.sprite = scene.sprites_numbers[b];
         o.t.localScale = new Vector3(scale, scale, scale);
         gos[idx] = o;
     }
 
     public bool Update() {
-        y += incY;
+        z += incZ;
         return endLifeTime < scene.time;
     }
 
     public virtual void Draw(float cx, float cy) {
-        //if (x < cx - Scene.designWidth_2
-        //|| x > cx + Scene.designWidth_2
-        //|| y < cy - Scene.designHeight_2
-        //|| y > cy + Scene.designHeight_2) {
-        //    for (int i = 0; i < size; ++i) {
-        //        gos[i].Disable();
-        //    }
-        //} else {
+        if (x < cx - Scene.designWidth_2
+        || x > cx + Scene.designWidth_2
+        || y < cy - Scene.designHeight
+        || y > cy + Scene.designHeight) {
+            for (int i = 0; i < size; ++i) {
+                gos[i].Disable();
+            }
+        } else {
             for (int i = 0; i < size; ++i) {
                 gos[i].Enable();
                 gos[i].t.position = new Vector3(
                     (x - i * 8 * scale) * Scene.designWidthToCameraRatio
-                    , y * Scene.designWidthToCameraRatio
-                    , -z * Scene.designWidthToCameraRatio
+                    , z * Scene.designWidthToCameraRatio
+                    , -y * Scene.designWidthToCameraRatio
                     );
             }
-        //}
+        }
     }
 
     public void Destroy() {

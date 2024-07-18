@@ -49,7 +49,7 @@ public class Stage1 : Stage {
         // 测试一下伤害数字的效果
         for (int i = 0; i < 50; i++) {
             var x = Random.Range(-Scene.designWidth_2, Scene.designWidth_2);
-            var y = Random.Range(-Scene.designHeight_2, Scene.designHeight_2);
+            var y = Random.Range(-Scene.designHeight, Scene.designHeight);
             var v = Random.Range(0, 9999);
             new Effect_Number(this, player.x + x, player.y + y, 2, v);
         }
