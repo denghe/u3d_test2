@@ -138,7 +138,7 @@ public class PlayerBullet {
             go.Enable();
 
             // 同步 & 坐标系转换( y 坐标需要反转 )
-            go.t.position = new Vector3(x * Scene.designWidthToCameraRatio, 0.08f, -y * Scene.designWidthToCameraRatio);
+            go.t.position = new Vector3(x * Scene.designWidthToCameraRatio, 0.15f, -y * Scene.designWidthToCameraRatio);
 
             // 根据半径同步缩放
             var s = displayBaseScale * radius * _1_defaultRadius;
@@ -147,7 +147,7 @@ public class PlayerBullet {
     }
 
     public virtual void DrawGizmos() {
-        Gizmos.DrawWireSphere(new Vector3(x * Scene.designWidthToCameraRatio, 0.08f, -y * Scene.designWidthToCameraRatio), radius * Scene.designWidthToCameraRatio);
+        Gizmos.DrawWireSphere(new Vector3(x * Scene.designWidthToCameraRatio, 0.15f, -y * Scene.designWidthToCameraRatio), radius * Scene.designWidthToCameraRatio);
     }
 
     public void Destroy() {
